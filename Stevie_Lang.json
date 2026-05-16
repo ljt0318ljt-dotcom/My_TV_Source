@@ -1,5 +1,5 @@
 {
-    "spider": "./svip.jar",
+    "spider": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/FongMi/catvod/main/jar/spider.jar",
     "wallpaper": "https://sgmao.serv00.net/image/",
     "logo": "./logo.gif",
     "sites": [
