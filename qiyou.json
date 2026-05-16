@@ -1,33 +1,52 @@
-// 网址发布页 www.qiyoudy.info
-muban.首图2.二级.title = 'h1&&Text;.data--span:eq(0)&&Text';
-muban.首图2.二级.desc = '.data.hidden-sm&&Text;;;p.line1--span&&Text;.data--span:eq(1)&&Text';
-muban.首图2.二级.content = '.desc--span&&Text';
-muban.首图2.二级.tabs = '.nav-tabs a';
 var rule = {
-    title:'奇优影院',
-    模板:'首图2',
-    host:'http://1e6e.com',
-    // url:'/list/fyclass_fypage.html',
-    url:'/list/fyclass_fypage.html?order=fyfilter',
-    filterable:1,//是否启用分类筛选,
-    filter_url:'{{fl.by}}',
-    filter:{
-        "1":[{"key":"by","name":"排序","value":[{"n":"按时间","v":"time"},{"n":"按人气","v":"hit"}]}],
-        "2":[{"key":"by","name":"排序","value":[{"n":"按时间","v":"time"},{"n":"按人气","v":"hit"}]}],
-        "3":[{"key":"by","name":"排序","value":[{"n":"按时间","v":"time"},{"n":"按人气","v":"hit"}]}],
-        "4":[{"key":"by","name":"排序","value":[{"n":"按时间","v":"time"},{"n":"按人气","v":"hit"}]}],
-        "6":[{"key":"by","name":"排序","value":[{"n":"按时间","v":"time"},{"n":"按人气","v":"hit"}]}]
+    title:'奇优影院',//规则标题,没有实际作用,但是可以作为cms类名称依据
+    编码:'',//不填就默认utf-8
+    host:'https://www.qiyoudy2.com',//网页的域名根,包含http头如 https://www,baidu.com
+    homeUrl:'/latest/',//网站的首页链接,可以是完整路径或者相对路径,用于分类获取和推荐获取 fyclass是分类标签 fypage是页数
+    url:'http://www.qiyoudy2.com/list/fyclass_fypage.html',//网站的分类页面链接
+    detailUrl:'https://yanetflix.com/voddetail/fyid.html',//非必填,二级详情拼接链接,感觉没啥卵用
+    searchUrl:'/search.php;post;searchword=**',//搜索链接 可以是完整路径或者相对路径,用于分类获取和推荐获取 **代表搜索词 fypage代表页数
+    searchable:1,//是否启用全局搜索,
+    quickSearch:0,//是否启用快速搜索,
+    filterable:0,//是否启用筛选,
+    filter:{},// 筛选条件字典
+    // 筛选网站传参,会自动传到分类链接下(本示例中的url参数)-url里参数为fyfilter,可参考蓝莓影视.js
+    filter_url:'style={{fl.style}}&zone={{fl.zone}}&year={{fl.year}}&fee={{fl.fee}}&order={{fl.order}}',
+    // 注意,由于猫有配置缓存,搜索配置没法热加载，修改了js不需要重启服务器
+    // 但是需要tv_box进设置里换源使配置重新装载
+    headers:{//网站的请求头,完整支持所有的,常带ua和cookies
+        'User-Agent':'MOBILE_UA',
+        "Cookie": "searchneed=ok"
     },
-    filter_def:{
-        1:{by:'time'},
-        2:{by:'time'},
-        3:{by:'time'},
-        4:{by:'time'},
-        6:{by:'time'}
-    },
-    class_parse: '.stui-header__menu li:gt(0):lt(5);a&&Text;a&&href;.*/(.*?).html',
-    // searchUrl:'/search.php;**',
-    searchUrl:'/search.php#searchword=**;post',
-    // 搜索:'js:let url=input.split(";")[0];let d=[];let body={searchword:input.split(";")[1]};body="searchword="+input.split(";")[1];fetch_params.body=body;let html=post(url,fetch_params);let pdfa=jsp.pdfa;let pdfh=jsp.pdfh;let pd=jsp.pd;let lists=pdfa(html,"ul.stui-vodlist__media&&li");lists.forEach(function(it){d.push({title:pdfh(it,".title&&Text"),url:pd(it,"a&&href"),desc:pdfh(html,".pic-text&&Text"),pic_url:pd(html,".lazyload&&data-original")})});setResult(d);',
-    //搜索:'li.stui-vodlist__item;a&&title;a&&data-original;.pic-text&&Text;a&&href'
+    timeout:5000,//网站的全局请求超时,默认是3000毫秒
+    //class_name:'电影&电视剧&动漫&综艺',//静态分类名称拼接
+    //class_url:'1&2&3&4',//静态分类标识拼接
+    //动态分类获取 列表;标题;链接;正则提取 不需要正则的时候后面别加分号
+    class_parse: '.stui-header__menu li;a&&title;a&&href;/list/(.+).html',
+    // 除开全局过滤之外还需要过滤哪些标题不视为分类
+    cate_exclude:'妹子',
+    // 除开全局动态线路名过滤之外还需要过滤哪些线路名标题不视为线路
+    tab_exclude:'',
+    // 服务器解析播放
+    play_parse:true,
+    // 自定义免嗅
+    lazy:'',
+    // 首页推荐显示数量
+    limit:6,
+    推荐: '.stui-pannel-box&&.stui-pannel_bd&&.stui-vodlist&&li;.stui-vodlist__detail&&h4&&a&&Text;.stui-vodlist__box&&a&&data-original;.stui-vodlist__detail&&p&&Text;.stui-vodlist__box&&a&&href',
+    double:true,//是否双层列表定位,默认false
+    // 类似海阔一级 列表;标题;图片;描述;链接;详情 其中最后一个参数选填
+    // 如果是双层定位的话,推荐的第2段分号代码也是第2层定位列表代码
+   
+    一级: '.stui-pannel-box&&.stui-pannel_bd&&.stui-vodlist&&li;.stui-vodlist__detail&&h4&&a&&Text;.stui-vodlist__box&&a&&data-original;.stui-vodlist__box&&a&&.pic-text&&Text;.stui-vodlist__box&&a&&href',
+    // 二级可以是*,表示规则无二级,直接拿一级的链接进行嗅探
+    // 或者 {title:'',img:'',desc:'',content:'',tabs:'',lists:''} 同海阔dr二级
+    二级: {
+    title: '.stui-content__detail&&h1&&Text',
+    desc: '.stui-content__detail&&p&&Text',
+    tabs: '.stui-pannel_hd&&ul&&li',
+    lists: '.stui-content__playlist&&li;a&&Text;a&&href'
+},
+    // 搜索可以是*,集成一级，或者跟一级一样的写法 列表;标题;图片;描述;链接;详情
+    搜索: '.stui-pannel-box&&.stui-pannel_bd&&.stui-vodlist&&li;.stui-vodlist__detail&&h4&&a&&Text;.stui-vodlist__box&&a&&data-original;.stui-vodlist__box&&a&&.pic-text&&Text;.stui-vodlist__box&&a&&href',
 }
