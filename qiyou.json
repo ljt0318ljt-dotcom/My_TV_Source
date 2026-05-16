@@ -46,7 +46,7 @@ var rule = {
     desc: '.stui-content__detail&&p&&Text',
     tabs: '.stui-pannel_hd&&ul&&li',
     lists: '.stui-content__playlist&&li;a&&Text;a&&href'
-},
+}
     // 搜索可以是*,集成一级，或者跟一级一样的写法 列表;标题;图片;描述;链接;详情
     搜索: '.stui-pannel-box&&.stui-pannel_bd&&.stui-vodlist&&li;.stui-vodlist__detail&&h4&&a&&Text;.stui-vodlist__box&&a&&data-original;.stui-vodlist__box&&a&&.pic-text&&Text;.stui-vodlist__box&&a&&href',
 }
