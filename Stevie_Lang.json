@@ -5,15 +5,15 @@
   "sites": [
     {
       "key": "AnimeMoDu",
-      "name": "icon魔都┃动漫icon",
+      "name": "魔都┃动漫",
       "type": 3,
       "api": "csp_AnimeMoDuGuard",
       "searchable": 1,
       "changeable": 1
     },
     {
-      "key": "csp_Qiyou",
-      "name": "icon奇优┃影视icon",
+      "key": "csp_Qiyou_New",
+      "name": "奇优┃影视",
       "type": 3,
       "api": "csp_XBPQ",
       "searchable": 1,
